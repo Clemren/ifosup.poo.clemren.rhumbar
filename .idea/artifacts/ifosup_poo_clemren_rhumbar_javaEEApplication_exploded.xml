@@ -1,0 +1,17 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" build-on-make="true" name="ifosup.poo.clemren.rhumbar:javaEEApplication exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/ifosup_poo_clemren_rhumbar_javaEEApplication_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="ifosup.poo.clemren.rhumbar/javaeeApplication/javaEEApplication" />
+      <element id="javaee-facet-resources" facet="ifosup.poo.clemren.rhumbar/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="ifosup.poo.clemren.rhumbar" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="mysql:mysql-connector-java:8.0.18" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

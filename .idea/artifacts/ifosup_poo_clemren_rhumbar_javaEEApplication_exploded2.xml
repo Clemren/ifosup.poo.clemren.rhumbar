@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-ear" name="ifosup.poo.clemren.rhumbar:javaEEApplication exploded2">
+    <output-path>$PROJECT_DIR$/out/artifacts/ifosup_poo_clemren_rhumbar_javaEEApplication_exploded2</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="ifosup.poo.clemren.rhumbar/javaeeApplication/javaEEApplication" />
+    </root>
+  </artifact>
+</component>
