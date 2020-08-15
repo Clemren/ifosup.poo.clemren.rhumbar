@@ -3,7 +3,7 @@ package beans;
 public class Origin {
     private int pk;
     private String name;
-
+    private String description;
 
      public Origin(){
 
@@ -28,5 +28,13 @@ public class Origin {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
