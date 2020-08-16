@@ -1,52 +1,46 @@
-<%@ page import="beans.Origin" %>
-<%@ page import="java.util.List" %><%--
-  Created by IntelliJ IDEA.
-  User: cleme
-  Date: 11/12/2019
-  Time: 18:38
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page isELIgnored="false" %>
-<html
-        xmlns="http://www.w3.org/1999/xhtml"
-        xmlns:c="http://java.sun.com/jstl/core">
-<head>
-    <meta charset="utf-8">
-    <title>Liste des origines de rhum</title>
-</head>
-<body>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<t:shell>
+    <jsp:attribute name="header">
+        <jsp:include page="../header.jsp"/>
+    </jsp:attribute>
+    <jsp:attribute name="breadcrumb">
+        <div class="ui breadcrumb">
+            <a class="section" href="${pageContext.request.contextPath}/origin">Origines</a>
+            <div class="divider"> / </div>
+        </div>
+    </jsp:attribute>
+    <jsp:body>
+        <h2>Liste des origines de rhum</h2>
+        <table class="ui celled table">
+            <thead>
+            <tr>
+                <th colspan="2">
+                    <a class="ui labeled icon button" href="${pageContext.request.contextPath}/origin/edit">
+                        <i class="add icon"></i>
+                        Ajouter une origine
+                    </a>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach items="${ origins }" var="origin">
+                <tr>
+                    <td>
+                            ${ origin.name }
+                    </td>
+                    <td>
+                        <a class="ui button blue basic basic"  href="${pageContext.request.contextPath}/origin/edit?id=${ origin.pk }">Modifier</a>
+                        <c:if test="${origin.canDelete}">
+                            <a class="ui button red basic" href="${pageContext.request.contextPath}/origin/delete?id=${ origin.pk }"
+                               onclick="return confirm('Souhaitez-vous réellement supprimer cette origine ?');">Supprimer</a>
+                        </c:if>
+                    </td>
+                </tr>
+            </c:forEach>
+            </tbody>
 
-<jsp:include page="../header.jsp"></jsp:include>
-
-<h2>Liste des origines de rhum</h2>
-<table>
-
-    <tr>
-        <th>
-            <a href="${pageContext.request.contextPath}/origin/edit">add</a>
-        </th>
-    </tr>
-
-    <%
-        List<Origin> origins = (List<Origin>) request.getAttribute("origins") ;
-        for (Origin origin : origins) {
-    %>
-    <tr>
-        <td>
-            <%=origin.getName()%>
-        </td>
-        <td>
-            <a href="${pageContext.request.contextPath}/origin/delete?id=<%= origin.getPk() %>"
-               onclick="return confirm('Souhaitez-vous réellement supprimer cette origine ?');">delete</a>
-        </td>
-
-        <td>
-            <a href="${pageContext.request.contextPath}/origin/edit?id=<%= origin.getPk() %>">edit</a>
-        </td>
-    </tr>
-
-    <%}%>
-</table>
-</body>
-</html>
+        </table>
+    </jsp:body>
+</t:shell>

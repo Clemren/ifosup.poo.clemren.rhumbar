@@ -1,18 +1,22 @@
 package beans;
 
-public class Origin {
+public class Rhum {
     private int pk;
     private String name;
     private String description;
-    private boolean canDelete;
-     public Origin(){
+    private String trademark;
+    private int fk_trademark;
+
+     public Rhum(){
 
      }
 
-    public Origin(int pk, String name) {
+    public Rhum(int pk, int fk_trademark , String name) {
         this.pk = pk;
+        this.fk_trademark = fk_trademark;
         this.name = name;
     }
+
 
     public int getPk() {
         return pk;
@@ -38,11 +42,19 @@ public class Origin {
         this.description = description;
     }
 
-    public boolean isCanDelete() {
-        return canDelete;
+    public String getTrademark() {
+        return trademark;
     }
 
-    public void setCanDelete(boolean canDelete) {
-        this.canDelete = canDelete;
+    public void setTrademark(String trademark) {
+        this.trademark = trademark;
+    }
+
+    public int getFk_trademark() {
+        return fk_trademark;
+    }
+
+    public void setFk_trademark(int fk_trademark) {
+        this.fk_trademark = fk_trademark;
     }
 }

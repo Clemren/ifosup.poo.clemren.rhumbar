@@ -13,7 +13,6 @@ public abstract class Dao<T> {
         System.out.println("Driver ?");
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            System.out.println("Driver OK");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -23,11 +22,9 @@ public abstract class Dao<T> {
             Properties info = new Properties();
             info.put("user", "root");
             info.put("password", "pass");
-
             dbo = DriverManager.getConnection(url, info);
 
             if (dbo != null) {
-                System.out.println("Successfully connected to MySQL database test");
             }
 
         } catch (SQLException ex) {
@@ -51,4 +48,5 @@ public abstract class Dao<T> {
     public abstract List<T> findAll();
 
     public abstract T findByName(String id);
+    public abstract boolean canDelete(int id);
 }

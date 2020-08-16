@@ -7,35 +7,33 @@
     </jsp:attribute>
     <jsp:attribute name="breadcrumb">
         <div class="ui breadcrumb">
-            <a class="section" href="${pageContext.request.contextPath}/origin">Origines</a>
+            <a class="section" href="${pageContext.request.contextPath}/rhum">Rhums</a>
             <div class="divider"> / </div>
         </div>
     </jsp:attribute>
     <jsp:body>
-        <h2>Liste des origines de rhum</h2>
+        <h2>Catalogue de rhums</h2>
         <table class="ui celled table">
             <thead>
             <tr>
                 <th colspan="2">
-                    <a class="ui labeled icon button" href="${pageContext.request.contextPath}/origin/edit">
+                    <a class="ui labeled icon button" href="${pageContext.request.contextPath}/rhum/edit">
                         <i class="add icon"></i>
-                        Ajouter une origine
+                        Ajouter un rhum
                     </a>
                 </th>
             </tr>
             </thead>
             <tbody>
-            <c:forEach items="${ origins }" var="origin">
+            <c:forEach items="${ rhums }" var="rhum">
                 <tr>
                     <td>
-                            ${ origin.name }
+                            ${ rhum.name }
                     </td>
                     <td>
-                        <a class="ui button blue basic basic"  href="${pageContext.request.contextPath}/origin/edit?id=${ origin.pk }">Modifier</a>
-                        <c:if test="${origin.canDelete}">
-                            <a class="ui button red basic" href="${pageContext.request.contextPath}/origin/delete?id=${ origin.pk }"
-                               onclick="return confirm('Souhaitez-vous réellement supprimer cette origine ?');">Supprimer</a>
-                        </c:if>
+                        <a class="ui button blue basic basic"  href="${pageContext.request.contextPath}/rhum/edit?id=${ rhum.pk }">Modifier</a>
+                        <a class="ui button red basic" href="${pageContext.request.contextPath}/rhum/delete?id=${ rhum.pk }"
+                           onclick="return confirm('Souhaitez-vous réellement supprimer ce rhum ?');">Supprimer</a>
                     </td>
                 </tr>
             </c:forEach>

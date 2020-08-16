@@ -1,16 +1,19 @@
 package beans;
 
-public class Origin {
+public class Trademark {
     private int pk;
     private String name;
     private String description;
+    private String origin;
+    private int fk_origin;
     private boolean canDelete;
-     public Origin(){
+     public Trademark(){
 
      }
 
-    public Origin(int pk, String name) {
+    public Trademark(int pk, int fk_origin ,String name) {
         this.pk = pk;
+        this.fk_origin = fk_origin;
         this.name = name;
     }
 
@@ -36,6 +39,22 @@ public class Origin {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getFk_origin() {
+        return fk_origin;
+    }
+
+    public void setFk_origin(int fk_origin) {
+        this.fk_origin = fk_origin;
+    }
+
+    public String getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(String origin) {
+        this.origin = origin;
     }
 
     public boolean isCanDelete() {
