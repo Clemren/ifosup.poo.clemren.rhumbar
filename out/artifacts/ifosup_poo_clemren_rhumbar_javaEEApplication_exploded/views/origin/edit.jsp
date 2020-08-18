@@ -12,7 +12,7 @@
             <div class="section">${ origin.name == null ? "Ajouter" : "Modifier" }</div>
             <c:if test="${origin.name != null}">
                 <div class="divider"> / </div>
-            <div class="section">${ origin.name }</div>
+                <div class="section">${ origin.name }</div>
             </c:if>
         </div>
     </jsp:attribute>
@@ -33,6 +33,17 @@
                 </form>
             </div>
         </div>
-
+        <script>
+            $('form').validate({
+                rules: {
+                    name: {
+                        required: true
+                    }
+                },
+                messages: {
+                    name: "Veuillez entrer une origine"
+                }
+            });
+        </script>
     </jsp:body>
 </t:shell>

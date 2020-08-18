@@ -22,7 +22,7 @@
                 <div class="header">${ rhum.name == null ? "Ajouter" : "Modifier" }</div>
             </div>
             <div class="content">
-                <form action="${pageContext.request.contextPath}/rhum/edit" method="post" class="ui form">
+                <form action="${pageContext.request.contextPath}/rhum/edit" method="post" class="ui form" enctype="multipart/form-data">
                     <label for="trademark">Marque du rhum</label>
                     <select name="fk_trademark" id="trademark">
                         <c:forEach items="${ trademarks }" var="trademark">
@@ -43,11 +43,25 @@
                         <input type="text" name="name" id="name" value="${ rhum.name }">
                     </div>
                     <div class="field">
+                        <input type="file" name="file">
+                    </div>
+                    <div class="field">
                         <input type="submit" value="Enregistrer" class="ui button blue">
                     </div>
                 </form>
             </div>
         </div>
-
+        <script>
+            $('form').validate({
+                rules: {
+                    name: {
+                        required: true
+                    }
+                },
+                messages: {
+                    name: "Veuillez entrer un nom de rhum"
+                }
+            });
+        </script>
     </jsp:body>
 </t:shell>

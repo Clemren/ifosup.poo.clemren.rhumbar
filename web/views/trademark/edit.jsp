@@ -49,5 +49,17 @@
                 </form>
             </div>
         </div>
+        <script>
+            $('form').validate({
+                rules: {
+                    name: {
+                        required: true
+                    }
+                },
+                messages: {
+                    name: "Veuillez entrer un nom de marque"
+                }
+            });
+        </script>
     </jsp:body>
 </t:shell>

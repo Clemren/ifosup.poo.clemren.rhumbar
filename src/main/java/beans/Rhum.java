@@ -5,6 +5,7 @@ public class Rhum {
     private String name;
     private String description;
     private String trademark;
+    private String origin;
     private int fk_trademark;
 
      public Rhum(){
@@ -16,7 +17,6 @@ public class Rhum {
         this.fk_trademark = fk_trademark;
         this.name = name;
     }
-
 
     public int getPk() {
         return pk;
@@ -56,5 +56,13 @@ public class Rhum {
 
     public void setFk_trademark(int fk_trademark) {
         this.fk_trademark = fk_trademark;
+    }
+
+    public String getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(String origin) {
+        this.origin = origin;
     }
 }

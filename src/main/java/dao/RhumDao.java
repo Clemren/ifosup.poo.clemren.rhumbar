@@ -2,6 +2,7 @@ package dao;
 
 import beans.Rhum;
 import beans.Trademark;
+import builders.RhumBuilder;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -75,14 +76,22 @@ public class RhumDao extends Dao<Rhum> {
     @Override
     public List<Rhum> findAll() {
         try {
-            var preparedStatement = dbo.prepareStatement("SELECT * FROM rhums",
+            var preparedStatement = dbo.prepareStatement("SELECT * FROM rhums " +
+                            "inner join trademarks t on fk_trademark = t.pk_trademark " +
+                            "inner join origins o on t.fk_origin = o.pk_origin",
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
             preparedStatement.execute();
             var resultSet = preparedStatement.getResultSet();
             var rhums = new ArrayList();
             while(resultSet.next()){
-                rhums.add(new Trademark(resultSet.getInt("pk_rhum"),resultSet.getInt("fk_trademark"), resultSet.getString("name")));
+                var rhum = new RhumBuilder()
+                        .withId(resultSet.getInt("pk_rhum"))
+                        .withName(resultSet.getString("name"))
+                        .withTrademark(resultSet.getString("t.name"))
+                        .withOrigin(resultSet.getString("o.name"))
+                        .build();
+                rhums.add(rhum);
             }
             return rhums;
 

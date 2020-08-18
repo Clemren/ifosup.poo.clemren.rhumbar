@@ -10,7 +10,6 @@ public abstract class Dao<T> {
     protected Connection dbo = null;
 
     public Dao() {
-        System.out.println("Driver ?");
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
