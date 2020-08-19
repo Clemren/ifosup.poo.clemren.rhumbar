@@ -16,6 +16,7 @@ public class Servlet_Origin extends HttpServlet{
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ServletContext context = request.getServletContext();
         var originDao = new OriginDao();
         var idParameter = request.getParameter("id");
         Integer id = null;
@@ -27,6 +28,9 @@ public class Servlet_Origin extends HttpServlet{
 
             }
         }
+
+        var contextPath = request.getServletContext().getContextPath();
+
         var origins = originDao.findAll();
         request.setAttribute("origins", origins);
         request.getRequestDispatcher("views/origin/origin.jsp").forward(request, response);

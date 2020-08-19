@@ -13,8 +13,10 @@ public class OriginDao extends Dao<Origin> {
     @Override
     public void create(Origin origin) {
         try {
-            var preparedStatement = dbo.prepareStatement("INSERT INTO origins (name) VALUES (?)");
+            var preparedStatement = dbo.prepareStatement("INSERT INTO origins (name, country_alpha2, desccription) VALUES (?, ?, ?)");
             preparedStatement.setString(1, origin.getName());
+            preparedStatement.setString(2, origin.getCountryAlpha2());
+            preparedStatement.setString(3, origin.getDescription());
             preparedStatement.execute();
             var generatedKeys = preparedStatement.getGeneratedKeys();
             dbo.close();
@@ -44,15 +46,12 @@ public class OriginDao extends Dao<Origin> {
     @Override
     public void update(Origin origin) {
         try {
-            var preparedStatement = dbo.prepareStatement("UPDATE origins SET name = ? WHERE pk_origin =  ?");
+            var preparedStatement = dbo.prepareStatement("UPDATE origins SET name = ?, country_alpha = ?, description = ? WHERE pk_origin =  ?");
             preparedStatement.setString(1, origin.getName());
-            preparedStatement.setInt(2, origin.getPk());
+            preparedStatement.setString(2, origin.getCountryAlpha2());
+            preparedStatement.setString(3, origin.getDescription());
+            preparedStatement.setInt(3, origin.getPk());
             preparedStatement.execute();
-           // var generatedKeys = preparedStatement.getGeneratedKeys();
-            //Je n'ai à priori pas besoin de récupérer l'id de l'élément tout juste mis à jour.
-            //if (generatedKeys.next()) {
-            //    origin.setPk(generatedKeys.getInt(1));
-            //}
         } catch (SQLException e) {
             e.printStackTrace();
         }
