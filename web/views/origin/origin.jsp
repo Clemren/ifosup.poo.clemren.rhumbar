@@ -16,7 +16,7 @@
         <table class="ui celled table">
             <thead>
             <tr>
-                <th colspan="2">
+                <th colspan="3">
                     <a class="ui labeled icon button" href="${pageContext.request.contextPath}/origin/edit">
                         <i class="add icon"></i>
                         Ajouter une origine

@@ -15,10 +15,11 @@ public class RhumDao extends Dao<Rhum> {
     @Override
     public void create(Rhum rhum) {
         try {
-            var preparedStatement = dbo.prepareStatement("INSERT INTO rhums (name, fk_trademark, filename) VALUES (?, ?, ?)");
+            var preparedStatement = dbo.prepareStatement("INSERT INTO rhums (name, fk_trademark, filename, unitprice) VALUES (?, ?, ?, ?)");
             preparedStatement.setString(1, rhum.getName());
             preparedStatement.setInt(2, rhum.getFk_trademark());
             preparedStatement.setString(3, rhum.getFilename());
+            preparedStatement.setDouble(4, rhum.getUnitPrice());
             preparedStatement.execute();
             var generatedKeys = preparedStatement.getGeneratedKeys();
             if (generatedKeys.next()) {
@@ -47,8 +48,11 @@ public class RhumDao extends Dao<Rhum> {
     @Override
     public void update(Rhum rhum) {
         try {
-            var preparedStatement = dbo.prepareStatement("UPDATE rhums SET name = ? WHERE pk_rhum =  ?");
+            var preparedStatement = dbo.prepareStatement("UPDATE rhums SET name = ?, fk_trademark = ?, unitprice = ? WHERE pk_rhum =  ?");
             preparedStatement.setString(1, rhum.getName());
+            preparedStatement.setInt(2, rhum.getFk_trademark());
+            preparedStatement.setDouble(3, rhum.getUnitPrice());
+            preparedStatement.setDouble(4, rhum.getPk());
             preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -69,15 +73,28 @@ public class RhumDao extends Dao<Rhum> {
     @Override
     public Rhum find(int id) {
         try {
-            var preparedStatement = dbo.prepareStatement("SELECT * FROM rhums WHERE pk_rhum = ?",
+            var preparedStatement = dbo.prepareStatement("SELECT * FROM rhums " +
+                            "inner join trademarks t on fk_trademark = t.pk_trademark " +
+                            "inner join origins o on t.fk_origin = o.pk_origin " +
+                            "inner join countries c2 on o.fk_country = c2.pk_country " +
+                            "WHERE pk_rhum = ?",
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
             preparedStatement.setInt(1, id);
             preparedStatement.execute();
             var resultSet = preparedStatement.getResultSet();
             if (resultSet.first()) {
-                var rhum = new Rhum(resultSet.getInt("pk_rhum"), resultSet.getInt("fk_trademark"), resultSet.getString("name"));
-                rhum.setFilename(resultSet.getString("filename"));
+
+                var rhum = new RhumBuilder()
+                        .withId(resultSet.getInt("pk_rhum"))
+                        .withName(resultSet.getString("name"))
+                        .withTrademark(resultSet.getString("t.name"))
+                        .withOrigin(resultSet.getString("o.name"))
+                        .withCountryName(resultSet.getString("c2.name_fr"))
+                        .withCountryAlpha2(resultSet.getString("c2.alpha2"))
+                        .withFilename(resultSet.getString("filename"))
+                        .withUnitPrice(resultSet.getDouble("unitprice"))
+                        .build();
                 return rhum;
             }
             return null;
@@ -108,6 +125,7 @@ public class RhumDao extends Dao<Rhum> {
                         .withCountryName(resultSet.getString("c2.name_fr"))
                         .withCountryAlpha2(resultSet.getString("c2.alpha2"))
                         .withFilename(resultSet.getString("filename"))
+                        .withUnitPrice(resultSet.getDouble("unitprice"))
                         .build();
                 rhums.add(rhum);
             }

@@ -2,6 +2,7 @@ package servlets.rhum;
 
 import beans.Rhum;
 import beans.Trademark;
+import builders.RhumBuilder;
 import dao.RhumDao;
 import dao.TrademarkDao;
 
@@ -24,6 +25,7 @@ import java.nio.file.Paths;
 @MultipartConfig
 public class Servlet_Rhum_Edit extends HttpServlet{
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         var filePart = request.getPart("file");
         String fileName = null;
         if (filePart.getSize() > 0){
@@ -49,18 +51,26 @@ public class Servlet_Rhum_Edit extends HttpServlet{
         var idParameter = request.getParameter("id");
         var nameParameter = request.getParameter("name");
         var fkTrademarkParameter = request.getParameter("fk_trademark");
+        var unitPriceParameter = request.getParameter("unitprice");
         Integer id = null;
+        Double unitPrice = null;
         Integer fk_trademark = null;
         if (idParameter != null){
             try{
                 id = Integer.parseInt(idParameter);
+                unitPrice = Double.parseDouble(unitPriceParameter);
                 fk_trademark= Integer.parseInt(fkTrademarkParameter);
             }
             catch (Exception e){
-
+                System.out.println(e.getMessage());
             }
         }
-        var rhum = new Rhum(id, fk_trademark ,nameParameter);
+        var rhum = new RhumBuilder()
+                .withId(id)
+                .withFkTrademark(fk_trademark)
+                .withName(nameParameter)
+                .withUnitPrice(unitPrice)
+                .build();
         if (fileName != null){
             rhum.setFilename(fileName);
         }
@@ -73,7 +83,7 @@ public class Servlet_Rhum_Edit extends HttpServlet{
         else{
             rhumDao.create(rhum);
         }
-        response.sendRedirect(request.getContextPath() + "/rhum");
+        response.sendRedirect(request.getContextPath());
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -87,7 +97,7 @@ public class Servlet_Rhum_Edit extends HttpServlet{
                 id = Integer.parseInt(idParameter);
             }
             catch (Exception e){
-
+                System.out.println(e.getMessage());
             }
         }
         var rhum = new Rhum();

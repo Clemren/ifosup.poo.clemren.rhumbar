@@ -10,6 +10,8 @@ public class RhumBuilder {
     private String countryName;
     private String countryAlpha2;
     private String filename;
+    private double unitPrice;
+    private int fkTrademark;
 
     public RhumBuilder withId(int id) {
         this.id = id;
@@ -36,6 +38,10 @@ public class RhumBuilder {
         return this;
     }
 
+    public RhumBuilder withUnitPrice(double unitPrice) {
+        this.unitPrice = unitPrice;
+        return this;
+    }
 
     public RhumBuilder withCountryAlpha2(String countryAlpha2) {
         this.countryAlpha2 = countryAlpha2;
@@ -45,6 +51,10 @@ public class RhumBuilder {
 
     public RhumBuilder withTrademark(String trademark) {
         this.trademark = trademark;
+        return this;
+    }
+    public RhumBuilder withFkTrademark(int fkTrademark) {
+        this.fkTrademark = fkTrademark;
         return this;
     }
 
@@ -57,6 +67,8 @@ public class RhumBuilder {
         rhum.setFilename(this.filename);
         rhum.setCountryName(this.countryName);
         rhum.setCountryAlphaName(this.countryAlpha2);
+        rhum.setUnitPrice(this.unitPrice);
+        rhum.setFk_trademark(this.fkTrademark);
         return rhum;
     }
 

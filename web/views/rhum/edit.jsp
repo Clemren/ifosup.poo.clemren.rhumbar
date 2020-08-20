@@ -43,6 +43,10 @@
                         <input type="text" name="name" id="name" value="${ rhum.name }">
                     </div>
                     <div class="field">
+                        <label for="unitprice">Prix unitaire (hors tva)</label>
+                        <input type="number" step="0.01" min="0" name="unitprice" id="unitprice" value="${ rhum.unitPrice }">
+                    </div>
+                    <div class="field">
                         <input type="file" name="file">
                     </div>
                     <div class="field">
@@ -56,10 +60,15 @@
                 rules: {
                     name: {
                         required: true
+                    },
+                    unitprice: {
+                        required: true
                     }
                 },
                 messages: {
-                    name: "Veuillez entrer un nom de rhum"
+                    name: "Veuillez entrer un nom de rhum",
+                    unitprice: "Veuillez entrer un prix unitaire"
+
                 }
             });
         </script>

@@ -18,7 +18,6 @@ public class Servlet_Home extends HttpServlet{
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         var rhumDao = new RhumDao();
-        var trademarkDao = new TrademarkDao();
         var idParameter = request.getParameter("id");
         Integer id = null;
         if (idParameter != null){

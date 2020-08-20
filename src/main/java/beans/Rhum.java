@@ -10,6 +10,7 @@ public class Rhum {
     private String countryName;
     private String countryAlphaName;
     private int fk_trademark;
+    private double unitPrice;
 
      public Rhum(){
 
@@ -91,5 +92,17 @@ public class Rhum {
 
     public void setCountryAlphaName(String countryAlphaName) {
         this.countryAlphaName = countryAlphaName;
+    }
+
+    public double getUnitPrice() {
+        return unitPrice;
+    }
+
+    public void setUnitPrice(double unitPrice) {
+        this.unitPrice = unitPrice;
+    }
+
+    public double getVatIncludedUnitPrice() {
+        return unitPrice * 1.21;
     }
 }
