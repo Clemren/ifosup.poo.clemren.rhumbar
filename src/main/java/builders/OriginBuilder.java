@@ -32,35 +32,11 @@ public class OriginBuilder {
         return this;
     }
 
-    public OriginBuilder withCountryName(String countryAlpha2, String countryListPath) {
+    public OriginBuilder withCountryName(String countryAlpha2) {
 
 
 
-        JSONObject obj = new JSONObject(jsonString);
 
-        var path = Serv
-        try (FileReader reader = new FileReader("employees.json"))
-        {
-            //Read JSON file
-            Object obj = jsonParser.parse(reader);
-
-            JSONArray employeeList = (JSONArray) obj;
-            System.out.println(employeeList);
-
-            //Iterate over employee array
-            employeeList.forEach( emp -> parseEmployeeObject( (JSONObject) emp ) );
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-
-
-        this.countryName = trademark;
         return this;
     }
 
@@ -71,7 +47,7 @@ public class OriginBuilder {
         origin.setDescription(this.description);
         origin.setCountryAlpha2(this.countryAlpha2);
         origin.setCountryName(this.countryAlpha2);
-        return rhum;
+        return origin;
     }
 
 }

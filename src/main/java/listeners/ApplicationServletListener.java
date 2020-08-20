@@ -10,44 +10,26 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Properties;
 
-public class ApplicationServletContextListener implements ServletContextListener {
+public class ApplicationServletListener implements ServletContextListener {
     private static String countries;
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
-
-        try (FileReader reader = new FileReader(servletContextEvent.getServletContext()+ "/data/countries.json"))
-        {
-            JsonParser jsonParser = new JSONParser();
-            //Read JSON file
-            Object obj = jsonParser.pa(reader);
-
-            JSONArray employeeList = (JSONArray) obj;
-            System.out.println(employeeList);
-
-            //Iterate over employee array
-            employeeList.forEach( emp -> parseEmployeeObject( (JSONObject) emp ) );
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        String countriesString = null;
+        try {
+            countriesString = new String(Files.readAllBytes(Paths.get(servletContextEvent.getServletContext().getContextPath() +"/data/countries.json")));
         } catch (IOException e) {
             e.printStackTrace();
         }
+        JSONObject obj = new JSONObject(countriesString);
 
-        JSONObject obj = new JSONObject(jsonString);
-        properties.load(new FileInputStream(cfgfile));
-        //Some code..
-        properties.getProperty("dbUser");
+
     }
 
-    public static Properties getCountries(){
-        return properties;
+    public static String getCountries(){
+        return countries;
     }
 }

@@ -25,26 +25,25 @@ import java.nio.file.Paths;
 public class Servlet_Rhum_Edit extends HttpServlet{
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         var filePart = request.getPart("file");
+        String fileName = null;
         if (filePart.getSize() > 0){
-            var fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+            fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
             var fileContent = filePart.getInputStream();
             byte[] buffer = new byte[fileContent.available()];
             fileContent.read(buffer);
 
-            var directoryPath = request.getServletContext().getRealPath("web/images/" + fileName);
+            var directoryPath = request.getServletContext().getRealPath("images");
             var directoryLocation= new File(directoryPath);
             if (!directoryLocation.exists()){
                 directoryLocation.mkdir();
             }
 
 
-            var file = new File(directoryPath + fileName);
+            var file = new File(directoryPath + "/" + fileName);
             var outputStream = new FileOutputStream(file);
             outputStream.write(buffer);
             outputStream.close();
         }
-
-
         var rhumDao = new RhumDao();
         request.setCharacterEncoding("UTF-8");
         var idParameter = request.getParameter("id");
@@ -62,8 +61,14 @@ public class Servlet_Rhum_Edit extends HttpServlet{
             }
         }
         var rhum = new Rhum(id, fk_trademark ,nameParameter);
+        if (fileName != null){
+            rhum.setFilename(fileName);
+        }
         if (id != 0) {
             rhumDao.update(rhum);
+            if (fileName != null){
+                rhumDao.updateFilename(rhum);
+            }
         }
         else{
             rhumDao.create(rhum);

@@ -16,6 +16,7 @@
         <table class="ui celled table">
             <thead>
             <tr>
+                <th></th>
                 <th>
                     Rhum
                 </th>
@@ -31,13 +32,17 @@
             <c:forEach items="${ rhums }" var="rhum">
                 <tr>
                     <td>
+                        <img src="images/${ rhum.filename }" alt="image du rhum ${ rhum.name }" class="ui small image">
+                    </td>
+                    <td>
                             ${ rhum.name }
                     </td>
                     <td>
                             ${ rhum.trademark }
                     </td>
                     <td>
-                            ${ rhum.origin }
+                        <i class="${ rhum.countryAlphaName } flag"></i>
+                            ${ rhum.countryName } - ${ rhum.origin }
                     </td>
 
                 </tr>

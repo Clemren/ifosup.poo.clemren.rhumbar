@@ -54,10 +54,13 @@
                 $.get('${pageContext.request.contextPath}/data/countries.json', function (result) {
                     $(result).each(function (index, value) {
                         $('#countryMenu').append('<div class="item" data-value="'+value.alpha2+'"><i class="'+value.alpha2+' flag"></i>' + value.name + '</div>');
-                    });
-                });
+                    })
+                }).then(function(){
+                    $('.ui.dropdown').dropdown('set selected','${ origin.countryAlpha2.toLowerCase() }');
+                });;
             });
-            $('.ui.dropdown').dropdown();
+
+
             $('form').validate({
                 rules: {
                     name: {

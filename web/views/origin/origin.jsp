@@ -28,6 +28,10 @@
             <c:forEach items="${ origins }" var="origin">
                 <tr>
                     <td>
+                        <i class="${ origin.countryAlpha2 } flag"></i>
+                            ${ origin.countryName }
+                    </td>
+                    <td>
                             ${ origin.name }
                     </td>
                     <td>

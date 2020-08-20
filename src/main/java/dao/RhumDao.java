@@ -15,15 +15,16 @@ public class RhumDao extends Dao<Rhum> {
     @Override
     public void create(Rhum rhum) {
         try {
-            var preparedStatement = dbo.prepareStatement("INSERT INTO rhums (name, fk_trademark) VALUES (?, ?)");
+            var preparedStatement = dbo.prepareStatement("INSERT INTO rhums (name, fk_trademark, filename) VALUES (?, ?, ?)");
             preparedStatement.setString(1, rhum.getName());
             preparedStatement.setInt(2, rhum.getFk_trademark());
+            preparedStatement.setString(3, rhum.getFilename());
             preparedStatement.execute();
             var generatedKeys = preparedStatement.getGeneratedKeys();
-            dbo.close();
             if (generatedKeys.next()) {
                 rhum.setPk(generatedKeys.getInt(1));
             }
+            dbo.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -54,6 +55,17 @@ public class RhumDao extends Dao<Rhum> {
         }
     }
 
+    public void updateFilename(Rhum rhum) {
+        try {
+            var preparedStatement = dbo.prepareStatement("UPDATE rhums SET filename = ? WHERE pk_rhum =  ?");
+            preparedStatement.setString(1, rhum.getFilename());
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     @Override
     public Rhum find(int id) {
         try {
@@ -64,7 +76,9 @@ public class RhumDao extends Dao<Rhum> {
             preparedStatement.execute();
             var resultSet = preparedStatement.getResultSet();
             if (resultSet.first()) {
-                return new Rhum(resultSet.getInt("pk_rhum"), resultSet.getInt("fk_trademark"), resultSet.getString("name"));
+                var rhum = new Rhum(resultSet.getInt("pk_rhum"), resultSet.getInt("fk_trademark"), resultSet.getString("name"));
+                rhum.setFilename(resultSet.getString("filename"));
+                return rhum;
             }
             return null;
         } catch (SQLException e) {
@@ -78,7 +92,8 @@ public class RhumDao extends Dao<Rhum> {
         try {
             var preparedStatement = dbo.prepareStatement("SELECT * FROM rhums " +
                             "inner join trademarks t on fk_trademark = t.pk_trademark " +
-                            "inner join origins o on t.fk_origin = o.pk_origin",
+                            "inner join origins o on t.fk_origin = o.pk_origin " +
+                            "inner join countries c2 on o.fk_country = c2.pk_country",
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
             preparedStatement.execute();
@@ -90,6 +105,9 @@ public class RhumDao extends Dao<Rhum> {
                         .withName(resultSet.getString("name"))
                         .withTrademark(resultSet.getString("t.name"))
                         .withOrigin(resultSet.getString("o.name"))
+                        .withCountryName(resultSet.getString("c2.name_fr"))
+                        .withCountryAlpha2(resultSet.getString("c2.alpha2"))
+                        .withFilename(resultSet.getString("filename"))
                         .build();
                 rhums.add(rhum);
             }

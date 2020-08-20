@@ -16,7 +16,7 @@
         <table class="ui celled table">
             <thead>
             <tr>
-                <th colspan="2">
+                <th colspan="3">
                     <a class="ui labeled icon button" href="${pageContext.request.contextPath}/rhum/edit">
                         <i class="add icon"></i>
                         Ajouter un rhum
@@ -27,6 +27,9 @@
             <tbody>
             <c:forEach items="${ rhums }" var="rhum">
                 <tr>
+                    <td>
+                        <img src="images/${ rhum.filename }" alt="image du rhum ${ rhum.name }" class="ui small image">
+                    </td>
                     <td>
                             ${ rhum.name }
                     </td>

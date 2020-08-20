@@ -45,14 +45,11 @@ public class TrademarkDao extends Dao<Trademark> {
     @Override
     public void update(Trademark trademark) {
         try {
-            var preparedStatement = dbo.prepareStatement("UPDATE trademarks SET name = ? WHERE pk_trademark =  ?");
+            var preparedStatement = dbo.prepareStatement("UPDATE trademarks SET name = ?, fk_origin = ? WHERE pk_trademark =  ?");
             preparedStatement.setString(1, trademark.getName());
+            preparedStatement.setInt(2, trademark.getFk_origin());
+            preparedStatement.setInt(3, trademark.getPk());
             preparedStatement.execute();
-           // var generatedKeys = preparedStatement.getGeneratedKeys();
-            //Je n'ai à priori pas besoin de récupérer l'id de l'élément tout juste mis à jour.
-            //if (generatedKeys.next()) {
-            //    origin.setPk(generatedKeys.getInt(1));
-            //}
         } catch (SQLException e) {
             e.printStackTrace();
         }

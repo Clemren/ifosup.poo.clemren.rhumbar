@@ -6,6 +6,9 @@ public class Rhum {
     private String description;
     private String trademark;
     private String origin;
+    private String filename;
+    private String countryName;
+    private String countryAlphaName;
     private int fk_trademark;
 
      public Rhum(){
@@ -64,5 +67,29 @@ public class Rhum {
 
     public void setOrigin(String origin) {
         this.origin = origin;
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+
+    public String getCountryName() {
+        return countryName;
+    }
+
+    public void setCountryName(String countryName) {
+        this.countryName = countryName;
+    }
+
+    public String getCountryAlphaName() {
+        return countryAlphaName;
+    }
+
+    public void setCountryAlphaName(String countryAlphaName) {
+        this.countryAlphaName = countryAlphaName;
     }
 }

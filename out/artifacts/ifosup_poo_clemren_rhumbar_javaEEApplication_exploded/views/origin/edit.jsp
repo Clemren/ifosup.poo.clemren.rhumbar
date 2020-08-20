@@ -23,11 +23,7 @@
             </div>
             <div class="content">
                 <form action="${pageContext.request.contextPath}/origin/edit" method="post" class="ui form">
-                    <div class="field">
-                        <input type="hidden" name="id" value="${ origin.pk }">
-                        <label for="name">Lieu d'origine du rhum</label>
-                        <input type="text" name="name" id="name" value="${ origin.name }">
-                    </div>
+                    <input type="hidden" name="id" value="${ origin.pk }">
                     <div class="field">
                         <label for="name">Pays</label>
                         <div class="ui search selection dropdown" >
@@ -36,6 +32,16 @@
                             <div class="default text">Select Country</div>
                             <div class="menu" id="countryMenu"></div>
                         </div>
+                    </div>
+                    <div class="field">
+                        <label for="name">Description</label>
+                        <textarea name="description" id="description" rows="10" >${ origin.name }</textarea>
+                    </div>
+
+                    <div class="field">
+                        <input type="hidden" name="id" value="${ origin.pk }">
+                        <label for="name">Lieu d'origine du rhum</label>
+                        <input type="text" name="name" id="name" value="${ origin.name }">
                     </div>
                     <div class="field">
                         <input type="submit" value="Enregistrer" class="ui button blue">
@@ -48,10 +54,13 @@
                 $.get('${pageContext.request.contextPath}/data/countries.json', function (result) {
                     $(result).each(function (index, value) {
                         $('#countryMenu').append('<div class="item" data-value="'+value.alpha2+'"><i class="'+value.alpha2+' flag"></i>' + value.name + '</div>');
-                    });
-                });
+                    })
+                }).then(function(){
+                    $('.ui.dropdown').dropdown('set selected','${ origin.countryAlpha2.toLowerCase() }');
+                });;
             });
-            $('.ui.dropdown').dropdown();
+
+
             $('form').validate({
                 rules: {
                     name: {

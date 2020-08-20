@@ -4,6 +4,7 @@ public class Origin {
     private int pk;
     private String name;
     private String countryAlpha2;
+    private int fk_countryAlpha2;
     private String description;
     private String countryName;
     private boolean canDelete;
@@ -16,7 +17,11 @@ public class Origin {
         this.pk = pk;
         this.name = name;
     }
-
+    public Origin(int pk, String name, String countryAlpha2) {
+        this.pk = pk;
+        this.name = name;
+        this.countryAlpha2 = countryAlpha2;
+    }
     public int getPk() {
         return pk;
     }
@@ -64,5 +69,13 @@ public class Origin {
 
     public void setCountryName(String countryName) {
         this.countryName = countryName;
+    }
+
+    public int getFk_countryAlpha2() {
+        return fk_countryAlpha2;
+    }
+
+    public void setFk_countryAlpha2(int fk_countryAlpha2) {
+        this.fk_countryAlpha2 = fk_countryAlpha2;
     }
 }

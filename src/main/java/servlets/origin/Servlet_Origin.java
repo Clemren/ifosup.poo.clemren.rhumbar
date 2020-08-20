@@ -1,6 +1,7 @@
 package servlets.origin;
 
 import dao.OriginDao;
+import org.json.JSONObject;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.StringReader;
 
 @WebServlet(name = "Servlet_Origin", urlPatterns = {"/origin"})
 public class Servlet_Origin extends HttpServlet{
@@ -28,10 +30,10 @@ public class Servlet_Origin extends HttpServlet{
 
             }
         }
-
-        var contextPath = request.getServletContext().getContextPath();
-
         var origins = originDao.findAll();
+
+
+
         request.setAttribute("origins", origins);
         request.getRequestDispatcher("views/origin/origin.jsp").forward(request, response);
     }

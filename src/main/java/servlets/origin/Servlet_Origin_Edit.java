@@ -1,6 +1,8 @@
 package servlets.origin;
 
+import beans.Country;
 import beans.Origin;
+import dao.CountryDao;
 import dao.OriginDao;
 
 import javax.servlet.*;
@@ -14,9 +16,11 @@ import java.io.IOException;
 public class Servlet_Origin_Edit extends HttpServlet{
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         var originDao = new OriginDao();
+        var countryDao = new CountryDao();
         request.setCharacterEncoding("UTF-8");
         var idParameter = request.getParameter("id");
         var nameParameter = request.getParameter("name");
+        var countryAlpha2Parameter = request.getParameter("country");
         Integer id = null;
         if (idParameter != null){
             try{
@@ -27,6 +31,7 @@ public class Servlet_Origin_Edit extends HttpServlet{
             }
         }
         var origin = new Origin(id, nameParameter);
+        origin.setFk_countryAlpha2(countryDao.findByAlpha2(countryAlpha2Parameter).getPk());
         if (id != 0) {
             originDao.update(origin);
         }

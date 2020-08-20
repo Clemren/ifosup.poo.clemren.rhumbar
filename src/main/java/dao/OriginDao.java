@@ -1,7 +1,11 @@
 package dao;
 
 import beans.Origin;
+import builders.OriginBuilder;
+import com.jayway.restassured.path.json.JsonPath;
+import org.json.JSONObject;
 
+import javax.servlet.ServletContext;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -13,10 +17,10 @@ public class OriginDao extends Dao<Origin> {
     @Override
     public void create(Origin origin) {
         try {
-            var preparedStatement = dbo.prepareStatement("INSERT INTO origins (name, country_alpha2, desccription) VALUES (?, ?, ?)");
+            var preparedStatement = dbo.prepareStatement("INSERT INTO origins (name, description, fk_country) VALUES (?, ?, ?)");
             preparedStatement.setString(1, origin.getName());
-            preparedStatement.setString(2, origin.getCountryAlpha2());
-            preparedStatement.setString(3, origin.getDescription());
+            preparedStatement.setString(2, origin.getDescription());
+            preparedStatement.setInt(3, origin.getFk_countryAlpha2());
             preparedStatement.execute();
             var generatedKeys = preparedStatement.getGeneratedKeys();
             dbo.close();
@@ -46,11 +50,11 @@ public class OriginDao extends Dao<Origin> {
     @Override
     public void update(Origin origin) {
         try {
-            var preparedStatement = dbo.prepareStatement("UPDATE origins SET name = ?, country_alpha = ?, description = ? WHERE pk_origin =  ?");
+            var preparedStatement = dbo.prepareStatement("UPDATE origins SET name = ?, description = ?, fk_country = ? WHERE pk_origin =  ?");
             preparedStatement.setString(1, origin.getName());
-            preparedStatement.setString(2, origin.getCountryAlpha2());
-            preparedStatement.setString(3, origin.getDescription());
-            preparedStatement.setInt(3, origin.getPk());
+            preparedStatement.setString(2, origin.getDescription());
+            preparedStatement.setInt(3, origin.getFk_countryAlpha2());
+            preparedStatement.setInt(4, origin.getPk());
             preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -67,7 +71,14 @@ public class OriginDao extends Dao<Origin> {
             preparedStatement.execute();
             var resultSet = preparedStatement.getResultSet();
             if (resultSet.first()) {
-                return new Origin(resultSet.getInt("pk_origin"), resultSet.getString("name"));
+
+                var country = new CountryDao().find(resultSet.getInt("fk_country"));
+                return new OriginBuilder()
+                        .withId(resultSet.getInt("pk_origin"))
+                        .withName(resultSet.getString("name"))
+                        .withCountryAlpha2(country.getAlpha2())
+                        .withCountryName(country.getName())
+                        .build();
             }
             return null;
         } catch (SQLException e) {
@@ -86,8 +97,13 @@ public class OriginDao extends Dao<Origin> {
             var resultSet = preparedStatement.getResultSet();
             var origins = new ArrayList();
             while(resultSet.next()){
-                var origin = new Origin(resultSet.getInt("pk_origin"), resultSet.getString("name"));
-                origin.setCanDelete(this.canDelete(resultSet.getInt("pk_origin")));
+                var country = new CountryDao().find(resultSet.getInt("fk_country"));
+                var origin = new OriginBuilder()
+                        .withId(resultSet.getInt("pk_origin"))
+                        .withName(resultSet.getString("name"))
+                        .withCountryAlpha2(country.getAlpha2())
+                        .withCountryName(country.getName())
+                        .build();
                 origins.add(origin);
             }
             return origins;
