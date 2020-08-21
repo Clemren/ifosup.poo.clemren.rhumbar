@@ -15,11 +15,12 @@ public class RhumDao extends Dao<Rhum> {
     @Override
     public void create(Rhum rhum) {
         try {
-            var preparedStatement = dbo.prepareStatement("INSERT INTO rhums (name, fk_trademark, filename, unitprice) VALUES (?, ?, ?, ?)");
+            var preparedStatement = dbo.prepareStatement("INSERT INTO rhums (name, fk_trademark, filename, unitprice, description) VALUES (?, ?, ?, ?, ?)");
             preparedStatement.setString(1, rhum.getName());
             preparedStatement.setInt(2, rhum.getFk_trademark());
             preparedStatement.setString(3, rhum.getFilename());
             preparedStatement.setDouble(4, rhum.getUnitPrice());
+            preparedStatement.setString(5, rhum.getDescription());
             preparedStatement.execute();
             var generatedKeys = preparedStatement.getGeneratedKeys();
             if (generatedKeys.next()) {
@@ -48,11 +49,13 @@ public class RhumDao extends Dao<Rhum> {
     @Override
     public void update(Rhum rhum) {
         try {
-            var preparedStatement = dbo.prepareStatement("UPDATE rhums SET name = ?, fk_trademark = ?, unitprice = ? WHERE pk_rhum =  ?");
+            var preparedStatement = dbo.prepareStatement("UPDATE rhums SET name = ?, fk_trademark = ?, unitprice = ?, description = ? WHERE pk_rhum =  ?");
             preparedStatement.setString(1, rhum.getName());
             preparedStatement.setInt(2, rhum.getFk_trademark());
             preparedStatement.setDouble(3, rhum.getUnitPrice());
-            preparedStatement.setDouble(4, rhum.getPk());
+            preparedStatement.setString(4, rhum.getDescription());
+            preparedStatement.setDouble(5, rhum.getPk());
+
             preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -89,11 +92,13 @@ public class RhumDao extends Dao<Rhum> {
                         .withId(resultSet.getInt("pk_rhum"))
                         .withName(resultSet.getString("name"))
                         .withTrademark(resultSet.getString("t.name"))
+                        .withFkTrademark(resultSet.getInt("t.pk_trademark"))
                         .withOrigin(resultSet.getString("o.name"))
                         .withCountryName(resultSet.getString("c2.name_fr"))
                         .withCountryAlpha2(resultSet.getString("c2.alpha2"))
                         .withFilename(resultSet.getString("filename"))
                         .withUnitPrice(resultSet.getDouble("unitprice"))
+                        .withDescription(resultSet.getString("description"))
                         .build();
                 return rhum;
             }
@@ -107,10 +112,10 @@ public class RhumDao extends Dao<Rhum> {
     @Override
     public List<Rhum> findAll() {
         try {
-            var preparedStatement = dbo.prepareStatement("SELECT * FROM rhums " +
+            var preparedStatement = dbo.prepareStatement("SELECT * FROM rhums r " +
                             "inner join trademarks t on fk_trademark = t.pk_trademark " +
                             "inner join origins o on t.fk_origin = o.pk_origin " +
-                            "inner join countries c2 on o.fk_country = c2.pk_country",
+                            "inner join countries c2 on o.fk_country = c2.pk_country ORDER BY r.name ASC ",
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
             preparedStatement.execute();
@@ -119,14 +124,16 @@ public class RhumDao extends Dao<Rhum> {
             while(resultSet.next()){
                 var rhum = new RhumBuilder()
                         .withId(resultSet.getInt("pk_rhum"))
-                        .withName(resultSet.getString("name"))
+                        .withName(resultSet.getString("r.name"))
                         .withTrademark(resultSet.getString("t.name"))
                         .withOrigin(resultSet.getString("o.name"))
                         .withCountryName(resultSet.getString("c2.name_fr"))
                         .withCountryAlpha2(resultSet.getString("c2.alpha2"))
-                        .withFilename(resultSet.getString("filename"))
-                        .withUnitPrice(resultSet.getDouble("unitprice"))
+                        .withFilename(resultSet.getString("r.filename"))
+                        .withUnitPrice(resultSet.getDouble("r.unitprice"))
+                        .withDescription(resultSet.getString("r.description"))
                         .build();
+                rhum.setCanDelete(true);
                 rhums.add(rhum);
             }
             return rhums;

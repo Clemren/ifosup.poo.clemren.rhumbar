@@ -12,6 +12,7 @@ public class RhumBuilder {
     private String filename;
     private double unitPrice;
     private int fkTrademark;
+    private String description;
 
     public RhumBuilder withId(int id) {
         this.id = id;
@@ -57,7 +58,10 @@ public class RhumBuilder {
         this.fkTrademark = fkTrademark;
         return this;
     }
-
+    public RhumBuilder withDescription(String description) {
+        this.description  = description;
+        return this;
+    }
     public Rhum build(){
         var rhum = new Rhum();
         rhum.setPk(this.id);
@@ -69,7 +73,10 @@ public class RhumBuilder {
         rhum.setCountryAlphaName(this.countryAlpha2);
         rhum.setUnitPrice(this.unitPrice);
         rhum.setFk_trademark(this.fkTrademark);
+        rhum.setDescription(this.description);
         return rhum;
     }
 
 }
+
+

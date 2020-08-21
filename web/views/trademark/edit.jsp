@@ -44,7 +44,7 @@
                         <input type="text" name="name" value="${ trademark.name }">
                     </div>
                     <div class="field">
-                        <input type="submit" value="Enregistrer" class="ui button blue">
+                        <input type="submit" value="Enregistrer" class="ui button teal">
                     </div>
                 </form>
             </div>

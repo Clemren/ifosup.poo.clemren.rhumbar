@@ -28,7 +28,7 @@
                         <c:forEach items="${ trademarks }" var="trademark">
                             <c:choose>
                                 <c:when test="${ rhum.fk_trademark == trademark.pk }">
-                                    <option value="${ trademark.pk }" selected="selected">${ trademark.name }</option>
+                                    <option value="${ trademark.pk }" selected>${ trademark.name }</option>
                                 </c:when>
                                 <c:otherwise>
                                     <option value="${ trademark.pk }">${ trademark.name }</option>
@@ -47,10 +47,14 @@
                         <input type="number" step="0.01" min="0" name="unitprice" id="unitprice" value="${ rhum.unitPrice }">
                     </div>
                     <div class="field">
+                        <label for="name">Description</label>
+                        <textarea name="description" id="description" rows="10" >${ rhum.description }</textarea>
+                    </div>
+                    <div class="field">
                         <input type="file" name="file">
                     </div>
                     <div class="field">
-                        <input type="submit" value="Enregistrer" class="ui button blue">
+                        <input type="submit" value="Enregistrer" class="ui button teal">
                     </div>
                 </form>
             </div>

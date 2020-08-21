@@ -4,13 +4,13 @@ public class RhumFilter {
     private String name;
     private String trademark;
     private String origin;
-    private int countryId;
+    private String country;
 
-    public RhumFilter(String name, String trademark, String origin, int countryId) {
+    public RhumFilter(String name, String trademark, String origin, String country) {
         this.name = name;
         this.trademark = trademark;
         this.origin = origin;
-        this.countryId = countryId;
+        this.country = country;
     }
 
     public String getName() {
@@ -37,11 +37,11 @@ public class RhumFilter {
         this.origin = origin;
     }
 
-    public int getCountryId() {
-        return countryId;
+    public String getCountry() {
+        return country;
     }
 
-    public void setCountryId(int countryId) {
-        this.countryId = countryId;
+    public void setCountry(String country) {
+        this.country = country;
     }
 }

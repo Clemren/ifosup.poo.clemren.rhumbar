@@ -90,7 +90,7 @@ public class OriginDao extends Dao<Origin> {
     @Override
     public List<Origin> findAll() {
         try {
-            var preparedStatement = dbo.prepareStatement("SELECT * FROM origins",
+            var preparedStatement = dbo.prepareStatement("SELECT * FROM origins ORDER BY name asc",
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
             preparedStatement.execute();
@@ -104,6 +104,7 @@ public class OriginDao extends Dao<Origin> {
                         .withCountryAlpha2(country.getAlpha2())
                         .withCountryName(country.getName())
                         .build();
+                origin.setCanDelete(this.canDelete(resultSet.getInt("pk_origin")));
                 origins.add(origin);
             }
             return origins;

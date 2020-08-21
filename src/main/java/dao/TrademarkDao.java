@@ -77,7 +77,7 @@ public class TrademarkDao extends Dao<Trademark> {
     @Override
     public List<Trademark> findAll() {
         try {
-            var preparedStatement = dbo.prepareStatement("SELECT * FROM trademarks",
+            var preparedStatement = dbo.prepareStatement("SELECT * FROM trademarks ORDER BY name asc",
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
             preparedStatement.execute();

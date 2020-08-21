@@ -52,6 +52,7 @@ public class Servlet_Rhum_Edit extends HttpServlet{
         var nameParameter = request.getParameter("name");
         var fkTrademarkParameter = request.getParameter("fk_trademark");
         var unitPriceParameter = request.getParameter("unitprice");
+        var descriptionParameter = request.getParameter("descriptionParameter");
         Integer id = null;
         Double unitPrice = null;
         Integer fk_trademark = null;
@@ -70,6 +71,7 @@ public class Servlet_Rhum_Edit extends HttpServlet{
                 .withFkTrademark(fk_trademark)
                 .withName(nameParameter)
                 .withUnitPrice(unitPrice)
+                .withDescription(descriptionParameter)
                 .build();
         if (fileName != null){
             rhum.setFilename(fileName);

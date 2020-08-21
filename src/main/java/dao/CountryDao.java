@@ -53,7 +53,7 @@ public class CountryDao extends Dao<Country> {
     @Override
     public List<Country> findAll() {
         try {
-            var preparedStatement = dbo.prepareStatement("SELECT * FROM countries",
+            var preparedStatement = dbo.prepareStatement("SELECT * FROM countries ORDER BY name asc",
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
             preparedStatement.execute();

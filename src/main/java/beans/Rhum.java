@@ -1,5 +1,8 @@
 package beans;
 
+import java.text.DecimalFormat;
+import java.util.Locale;
+
 public class Rhum {
     private int pk;
     private String name;
@@ -11,6 +14,7 @@ public class Rhum {
     private String countryAlphaName;
     private int fk_trademark;
     private double unitPrice;
+    private boolean canDelete;
 
      public Rhum(){
 
@@ -104,5 +108,17 @@ public class Rhum {
 
     public double getVatIncludedUnitPrice() {
         return unitPrice * 1.21;
+    }
+
+    public String getFormattedCurrencyPrice(){
+        return DecimalFormat.getCurrencyInstance(Locale.FRANCE).format(this.getVatIncludedUnitPrice());
+    }
+
+    public boolean isCanDelete() {
+        return canDelete;
+    }
+
+    public void setCanDelete(boolean canDelete) {
+        this.canDelete = canDelete;
     }
 }

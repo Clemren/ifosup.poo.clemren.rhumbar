@@ -1,5 +1,6 @@
 package servlets.rhum;
 
+import dao.CountryDao;
 import dao.RhumDao;
 import filters.RhumFilter;
 import managers.RhumManager;
@@ -22,20 +23,14 @@ public class Servlet_Rhum_Filter extends HttpServlet {
 
         var rhumManager = new RhumManager();
         var rhumDao = new RhumDao();
+        var countryDao = new CountryDao();
 
-        var nameParameter = request.getParameter("name") != null ? request.getParameter("name") : "" ;;
+        var countryParameter = request.getParameter("country") != null ? request.getParameter("country") : "" ;
+        var nameParameter = request.getParameter("name") != null ? request.getParameter("name") : "" ;
         var trademarkParameter = request.getParameter("trademark") != null ? request.getParameter("trademark") : "" ;
         var origineParameter = request.getParameter("origin") != null ? request.getParameter("origin") : "";
-        var countryIdParameter = request.getParameter("countryId");
-        Integer countryId = 0;
-        if (countryIdParameter != null) {
-            try {
-                countryId = Integer.parseInt(countryIdParameter);
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
-        }
-        var filter = new RhumFilter(nameParameter, trademarkParameter, origineParameter, countryId);
+
+        var filter = new RhumFilter(nameParameter, trademarkParameter, origineParameter, countryParameter);
         var rhums = rhumManager.getRhumSearch(filter,rhumDao.findAll());
         request.setAttribute("rhums", rhums);
         request.getRequestDispatcher("/views/rhum/table.jsp").forward(request, response);

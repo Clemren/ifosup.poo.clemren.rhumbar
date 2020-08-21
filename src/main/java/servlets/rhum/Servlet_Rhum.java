@@ -35,6 +35,4 @@ public class Servlet_Rhum extends HttpServlet{
         request.setAttribute("rhums", rhums);
         request.getRequestDispatcher("views/rhum/rhum.jsp").forward(request, response);
     }
-
-
 }

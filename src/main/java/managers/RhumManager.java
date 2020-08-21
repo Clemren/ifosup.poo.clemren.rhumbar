@@ -3,6 +3,7 @@ package managers;
 import beans.Rhum;
 import filters.RhumFilter;
 
+import java.text.Normalizer;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -21,24 +22,35 @@ public class RhumManager {
         };
         if (!rhumFilter.getName().isBlank()){
             exp = exp.and(p-> {
-                return p.getName().toLowerCase().contains(rhumFilter.getName().toLowerCase());
+                return removeDiacritics(p.getName().toLowerCase()).contains(removeDiacritics(rhumFilter.getName().toLowerCase()));
             });
         }
         if (!rhumFilter.getOrigin().isBlank()){
             exp = exp.and(p-> {
-                return p.getOrigin().toLowerCase().contains(rhumFilter.getOrigin().toLowerCase());
+                return removeDiacritics(p.getOrigin().toLowerCase()).contains(removeDiacritics(rhumFilter.getOrigin().toLowerCase()));
             });
         }
         if (!rhumFilter.getTrademark().isBlank()){
             exp = exp.and(p-> {
-                return p.getTrademark().toLowerCase().contains(rhumFilter.getTrademark().toLowerCase());
+                return removeDiacritics(p.getTrademark().toLowerCase()).contains(removeDiacritics(rhumFilter.getTrademark().toLowerCase()));
             });
         }
-        if (rhumFilter.getCountryId() != 0){
+
+        if (!rhumFilter.getCountry().isBlank()){
             exp = exp.and(p-> {
-                return p.getFk_trademark() == rhumFilter.getCountryId();
+                return p.getCountryAlphaName().toLowerCase().equals(rhumFilter.getCountry().toLowerCase());
             });
         }
         return exp;
     }
+
+
+
+    private static String removeDiacritics(String s)
+    {
+        s = Normalizer.normalize(s, Normalizer.Form.NFD);
+        s = s.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
+        return s;
+    }
+
 }

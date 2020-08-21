@@ -12,6 +12,9 @@
         </div>
     </jsp:attribute>
     <jsp:body>
+
+
+
         <h2>Catalogue de rhums</h2>
         <table class="ui celled table">
             <thead>

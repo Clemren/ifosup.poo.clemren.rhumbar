@@ -29,22 +29,17 @@
                         <div class="ui search selection dropdown" >
                             <input type="hidden" name="country">
                             <i class="dropdown icon"></i>
-                            <div class="default text">Select Country</div>
+                            <div class="default text">Sélectionnez un pays</div>
                             <div class="menu" id="countryMenu"></div>
                         </div>
                     </div>
-                    <div class="field">
-                        <label for="name">Description</label>
-                        <textarea name="description" id="description" rows="10" >${ origin.name }</textarea>
-                    </div>
-
                     <div class="field">
                         <input type="hidden" name="id" value="${ origin.pk }">
                         <label for="name">Lieu d'origine du rhum</label>
                         <input type="text" name="name" id="name" value="${ origin.name }">
                     </div>
                     <div class="field">
-                        <input type="submit" value="Enregistrer" class="ui button blue">
+                        <input type="submit" value="Enregistrer" class="ui button teal">
                     </div>
                 </form>
             </div>

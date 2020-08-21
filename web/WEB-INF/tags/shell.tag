@@ -4,9 +4,8 @@
 <%@attribute name="title" fragment="true" %>
 <%@attribute name="breadcrumb" fragment="true" %>
 
-<html
-        xmlns="http://www.w3.org/1999/xhtml"
-        xmlns:c="http://java.sun.com/jstl/core">
+<html   lang="fr-fr"
+        xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8">
     <title>
@@ -16,6 +15,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js" integrity="sha512-UdIMMlVx0HEynClOIFSyOrPggomfhBKJE28LKl8yR3ghkgugPnG6iLfRfHwushZl1MOPSY6TsuBDGPK2X4zYKg==" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js" integrity="sha512-dqw6X88iGgZlTsONxZK9ePmJEFrmHwpuMrsUChjAw1mRUhUITE5QU9pkcSox+ynfLhL15Sv2al5A0LVyDCmtUw==" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" integrity="sha512-8bHTC73gkZ7rZ7vpqUQThUDhqcNFyYi2xgDgPDHc+GXVGHXq+xPjynxIopALmOPqzo9JZj0k6OqqewdGO3EsrQ==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css"/>
 </head>
 <body>
 <div class="ui container">
@@ -34,6 +34,13 @@
     <div id="pagefooter">
         <jsp:invoke fragment="footer"/>
     </div>
+
+    <div class="ui mini modal" id="modal">
+        <i class="close icon"></i>
+        <div class="content" id="modalContent">
+        </div>
+    </div>
+
 </div>
 </body>
 </html>

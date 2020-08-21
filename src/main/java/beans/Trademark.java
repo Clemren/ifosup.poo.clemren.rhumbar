@@ -3,7 +3,6 @@ package beans;
 public class Trademark {
     private int pk;
     private String name;
-    private String description;
     private String origin;
     private int fk_origin;
     private boolean canDelete;
@@ -33,13 +32,7 @@ public class Trademark {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
-    }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     public int getFk_origin() {
         return fk_origin;
