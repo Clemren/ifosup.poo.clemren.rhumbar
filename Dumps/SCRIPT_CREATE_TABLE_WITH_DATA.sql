@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `rhumbar` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `rhumbar`;
 -- MySQL dump 10.13  Distrib 8.0.18, for Win64 (x86_64)
 --
 -- Host: localhost    Database: rhumbar
@@ -63,7 +61,7 @@ CREATE TABLE `origins` (
   PRIMARY KEY (`pk_origin`),
   KEY `fk_origin_country_idx` (`fk_country`),
   CONSTRAINT `fk_origin_country` FOREIGN KEY (`fk_country`) REFERENCES `countries` (`pk_country`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -72,7 +70,7 @@ CREATE TABLE `origins` (
 
 LOCK TABLES `origins` WRITE;
 /*!40000 ALTER TABLE `origins` DISABLE KEYS */;
-INSERT INTO `origins` VALUES (21,'Martinique',NULL,75),(22,'test',NULL,23),(23,'Malgache',NULL,154);
+INSERT INTO `origins` VALUES (21,'Martinique',NULL,75),(26,'État de Lara',NULL,236);
 /*!40000 ALTER TABLE `origins` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -88,10 +86,12 @@ CREATE TABLE `rhums` (
   `name` varchar(45) NOT NULL,
   `fk_trademark` int(11) NOT NULL,
   `filename` varchar(250) DEFAULT NULL,
+  `unitprice` decimal(19,4) NOT NULL,
+  `description` text,
   PRIMARY KEY (`pk_rhum`),
   KEY `fk_rhum_trademark_idx` (`fk_trademark`),
   CONSTRAINT `fk_rhum_trademark` FOREIGN KEY (`fk_trademark`) REFERENCES `trademarks` (`pk_trademark`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -100,7 +100,6 @@ CREATE TABLE `rhums` (
 
 LOCK TABLES `rhums` WRITE;
 /*!40000 ALTER TABLE `rhums` DISABLE KEYS */;
-INSERT INTO `rhums` VALUES (10,'dfh',5,'clement-authentique-creme-rhum-z_2_1.jpg');
 /*!40000 ALTER TABLE `rhums` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -118,7 +117,7 @@ CREATE TABLE `trademarks` (
   PRIMARY KEY (`pk_trademark`),
   KEY `fk_trademark_origin_idx` (`fk_origin`),
   CONSTRAINT `fk_trademark_origin` FOREIGN KEY (`fk_origin`) REFERENCES `origins` (`pk_origin`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -127,7 +126,7 @@ CREATE TABLE `trademarks` (
 
 LOCK TABLES `trademarks` WRITE;
 /*!40000 ALTER TABLE `trademarks` DISABLE KEYS */;
-INSERT INTO `trademarks` VALUES (5,'Clément',23);
+INSERT INTO `trademarks` VALUES (7,'La Flibuste',21),(8,'Diplomatico',26),(9,'Distillerie J.M.',21);
 /*!40000 ALTER TABLE `trademarks` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -140,4 +139,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-08-20 18:20:38
+-- Dump completed on 2020-08-21 16:00:35
